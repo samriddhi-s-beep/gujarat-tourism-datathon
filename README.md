@@ -1,26 +1,47 @@
-# QUB GIFT City Datathon 2026 — Tourism for Inclusive Growth in Gujarat
+# PRAVAAH: Tourism Investment Framework for Gujarat
 
-> **The challenge:** Where should Gujarat invest its **₹6,500 crore** tourism budget to
+🏆 **2nd place, QUB GIFT City Datathon 2026** (challenge: *Tourism for Inclusive Growth in Gujarat*)
+
+> **The question:** Where should Gujarat invest its **₹6,500 crore** tourism budget to
 > maximise economic development, employment creation, regional inclusion and
 > environmental sustainability?
 
 Gujarat is India's **3rd-highest** receiver of foreign tourists and has declared
-2026/2027 the *"Year of Tourism"* — but on-the-ground experiences at sites are uneven.
-The task: turn the three datasets below into a defensible investment recommendation.
+2026/2027 the *"Year of Tourism"*, but the visitor experience at sites is uneven.
+
+## Our approach
+
+PRAVAAH runs in four steps: **score → constrain → allocate → stress-test**.
+
+1. **Score** every district on four objectives: yield-adjusted economic value, employment, inclusion and sustainability.
+2. **Constrain** the plan with an inclusion floor (at least 30% of the budget goes to the lowest-literacy districts). Eco-sensitive and congested districts lose sustainability headroom and are steered towards dispersal and quality upgrades instead of new capacity.
+3. **Allocate** the budget across districts and investment levers, with a separate exploration tranche for districts that have no footfall data.
+4. **Stress-test** the result under 500 Monte Carlo weightings of the four objectives (Dirichlet sampling) to see which recommendations hold up whatever the policy priorities.
+
+**Headline result:** Panchmahal, Kheda, Ahmedabad, Kachchh and Mehsana lead the balanced allocation. Panchmahal ranks in the top five in all 500 weightings. See [`analysis/outputs`](analysis/outputs) for the full allocation, scenario comparison and robustness tables, and [`presentation`](presentation) for the final deck.
+
+**Team PRAVAAH:** Akshay Siddi, Dhruv Malhotra, Samriddhi Soni, Shreyash Prajapati, Surabhi Roy Chowdhury
 
 ---
 
 ## 📁 Folder structure
 
 ```
-QUB_Datathon/
+gujarat-tourism-datathon/
 ├── data/
 │   ├── hotels.csv                  # 2,365 hotels — accommodation SUPPLY
 │   ├── tourism_statistics.csv      # 20 rows — tourist footfall DEMAND
 │   ├── socio_economic.csv          # 32 districts — inclusion / CONTEXT
+│   ├── gujarat_districts.geojson   # district boundaries for mapping
 │   ├── data_dictionary.xlsx        # column defs, metadata, cleaning log
 │   └── source_hotels_gujarat.xlsx  # original raw workbook (untouched)
-├── challenge_brief.pdf             # the official brief
+├── analysis/
+│   ├── pravaah_model.py            # scoring, constraints and allocation
+│   ├── robustness.py               # 500-run Monte Carlo stress test
+│   ├── make_figures.py             # charts
+│   └── outputs/                    # allocation tables and figures
+├── dashboard/                      # interactive decision-support dashboard (index.html)
+├── presentation/                   # final deck (PDF + PPTX) and slide images
 ├── prepare_data.py                 # reproducible cleaning script
 └── README.md
 ```
@@ -78,7 +99,7 @@ joined = (districts.rename(columns={"join_district": "district"})
 
 ---
 
-## 💡 Starter insight — demand vs. supply gap (already computed)
+## 💡 Early insight: demand vs. supply gap
 
 Joining footfall (demand) against hotel count (supply) surfaces the investment story:
 
@@ -94,20 +115,5 @@ Joining footfall (demand) against hotel count (supply) surfaces the investment s
 > intersection of all three datasets.
 
 ---
-
-## 🎯 Suggested directions (mapped to the evaluation criteria)
-
-| Approach | Idea | Hits criteria |
-|---|---|---|
-| **Geographic** | Map footfall vs hotel density to rank under-served districts | Insight, Evidence |
-| **Financial** | Allocate ₹6,500 cr by a demand/supply/inclusion score; estimate jobs created | Feasibility, Social impact |
-| **Predictive** | Model footfall from socio-economic + supply features; find growth headroom | Analysis quality, Innovation |
-| **Statistical** | Test whether literacy / sex-ratio correlate with tourism intensity | Analysis quality |
-| **Inclusion lens** | Weight investment toward low-literacy / low-density districts with demand | Social impact, Regional inclusion |
-
-**Deliverable:** a 5-minute presentation — problem, methodology, insights,
-implications, recommendations.
-
----
-*Folder prepared from `hotels_gujarat.xlsx`. Sources: commissionertourism.gujarat.gov.in
+*Data prepared from `hotels_gujarat.xlsx`. Sources: commissionertourism.gujarat.gov.in
 (footfall) and the 2011 Census of India.*
